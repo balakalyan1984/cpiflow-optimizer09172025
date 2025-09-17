@@ -1,0 +1,82 @@
+{
+"info": {
+"name": "cpiflow-optimizer API",
+"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+},
+"item": [
+{
+"name": "Greet",
+"request": {
+"method": "GET",
+"header": [{"key":"Authorization","value":"Bearer {{token}}"}],
+"url": {"raw": "{{baseUrl}}/v2/greet", "host": ["{{baseUrl}}"], "path": ["v2","greet"]}
+}
+},
+{
+"name": "Predict (full features)",
+"request": {
+"method": "POST",
+"header": [
+{"key":"Authorization","value":"Bearer {{token}}"},
+{"key":"Content-Type","value":"application/json"}
+],
+"body": {"mode":"raw","raw":"{
+\"instances\": [
+{\"ARTIFACT_NAME\":\"OrderToCash\",\"ORIGIN_COMPONENT_NAME\":\"SOAP\",\"LOG_LEVEL\":\"INFO\"}
+]
+}"},
+"url": {"raw": "{{baseUrl}}/v2/predict", "host": ["{{baseUrl}}"], "path": ["v2","predict"]}
+}
+},
+{
+"name": "Analyze (artifact only)",
+"request": {
+"method": "POST",
+"header": [
+{"key":"Authorization","value":"Bearer {{token}}"},
+{"key":"Content-Type","value":"application/json"}
+],
+"body": {"mode":"raw","raw":"{
+\"artifact_name\": \"PaymentSync\",
+\"top_k\": 4
+}"},
+"url": {"raw": "{{baseUrl}}/v2/analyze", "host": ["{{baseUrl}}"], "path": ["v2","analyze"]}
+}
+},
+{
+"name": "Analyze MANY",
+"request": {
+"method": "POST",
+"header": [
+{"key":"Authorization","value":"Bearer {{token}}"},
+{"key":"Content-Type","value":"application/json"}
+],
+"body": {"mode":"raw","raw":"{
+\"artifact_names\": [\"PaymentSync\",\"DeliveryNote\",\"OrderToCash\"],
+\"top_k\": 4
+}"},
+"url": {"raw": "{{baseUrl}}/v2/analyze_many", "host": ["{{baseUrl}}"], "path": ["v2","analyze_many"]}
+}
+},
+{
+"name": "Analyze ALL (alpha)",
+"request": {
+"method": "GET",
+"header": [{"key":"Authorization","value":"Bearer {{token}}"}],
+"url": {"raw": "{{baseUrl}}/v2/analyze_all?top_k=4&sort=alpha", "host": ["{{baseUrl}}"], "path": ["v2","analyze_all"], "query":[{"key":"top_k","value":"4"},{"key":"sort","value":"alpha"}]}
+}
+},
+{
+"name": "Analyze ALL (by error_rate)",
+"request": {
+"method": "GET",
+"header": [{"key":"Authorization","value":"Bearer {{token}}"}],
+"url": {"raw": "{{baseUrl}}/v2/analyze_all?top_k=4&sort=error_rate", "host": ["{{baseUrl}}"], "path": ["v2","analyze_all"], "query":[{"key":"top_k","value":"4"},{"key":"sort","value":"error_rate"}]}
+}
+}
+],
+"variable": [
+{"key":"baseUrl","value":"https://<your-serving-endpoint>"},
+{"key":"token","value":"<oauth-token>"}
+]
+}
